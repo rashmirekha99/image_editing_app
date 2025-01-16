@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_editing_app/core/utils/image_picker.dart';
 import 'package:image_picker/image_picker.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,17 +14,20 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final ImagePicker imagePicker = ImagePicker();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Image Edit'),
       ),
       body: Center(
         child: IconButton(
-            onPressed: ()async {
-           final XFile? file=  await imagePicker.pickImage(source: ImageSource.gallery);
+            onPressed: () async {
+              final File? file = await imagePick();
+              if (file != null) {
+                Navigator.pushNamed(context, '/editing_screen',
+                    arguments: file);
+              }
             },
-            icon: Icon(Icons.image)),
+            icon: const Icon(Icons.image)),
       ),
     );
   }
