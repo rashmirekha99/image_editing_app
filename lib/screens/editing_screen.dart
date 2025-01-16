@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_editing_app/widgets/edit_view_model.dart';
 
 class EditingScreen extends StatefulWidget {
   const EditingScreen({super.key, required this.imageFile});
@@ -10,7 +11,7 @@ class EditingScreen extends StatefulWidget {
   State<EditingScreen> createState() => _EditingScreenState();
 }
 
-class _EditingScreenState extends State<EditingScreen> {
+class _EditingScreenState extends EditViewModel {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,6 +22,10 @@ class _EditingScreenState extends State<EditingScreen> {
         widget.imageFile!,
         fit: BoxFit.cover,
         width: MediaQuery.of(context).size.width,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => addNewDialog(context),
+        child: const Icon(Icons.edit),
       ),
     );
   }
