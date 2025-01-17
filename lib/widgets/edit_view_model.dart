@@ -6,6 +6,20 @@ import 'package:image_editing_app/widgets/dialog_button.dart';
 abstract class EditViewModel extends State<EditingScreen> {
   TextEditingController textEditingController = TextEditingController();
   List<TextData> textData = [];
+  int currentIndex = 0;
+
+  setCurrentIndex(index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
+  changeTextColor(Color color) {
+    setState(() {
+      textData[currentIndex].textColor = color;
+    });
+  }
+
   addNewText() {
     setState(() {
       textData.add(TextData(

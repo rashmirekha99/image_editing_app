@@ -9,12 +9,15 @@ class ImageText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: Text(
-        textAlign: textData.textAlign,
-        textData.text,
-        style: TextStyle(
-          color: textData.textColor,
-          fontSize: textData.fontSize,
+      child: Container(
+        // decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+        child: Text(
+          textAlign: textData.textAlign,
+          textData.text,
+          style: TextStyle(
+            color: textData.textColor,
+            fontSize: textData.fontSize,
+          ),
         ),
       ),
     );
