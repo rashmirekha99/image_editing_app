@@ -1,12 +1,40 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:image_editing_app/core/utils/permission.dart';
 import 'package:image_editing_app/models/text_data_model.dart';
 import 'package:image_editing_app/screens/editing_screen.dart';
 import 'package:image_editing_app/widgets/dialog_button.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:screenshot/screenshot.dart';
 
 abstract class EditViewModel extends State<EditingScreen> {
   TextEditingController textEditingController = TextEditingController();
+  ScreenshotController screenshotController = ScreenshotController();
   List<TextData> textData = [];
   int currentIndex = 0;
+
+  saveToGallery(BuildContext context) {
+    if (textData.isNotEmpty) {
+      screenshotController.capture().then((Uint8List? image) async {
+        await saveImage(image!);
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Added to gallery')));
+      }).catchError((e) => print(e));
+    }
+  }
+
+  saveImage(Uint8List image) async {
+    final time = DateTime.now()
+        .toIso8601String()
+        .replaceAll('.', '-')
+        .replaceAll(':', '-');
+    final name = "screenshot_$time";
+    await requestPermission(Permission.storage);
+    await ImageGallerySaver.saveImage(image, name: name);
+  }
 
   setCurrentIndex(index) {
     setState(() {
@@ -48,6 +76,30 @@ abstract class EditViewModel extends State<EditingScreen> {
   italicText() {
     setState(() {
       textData[currentIndex].isItalic = !textData[currentIndex].isItalic;
+    });
+  }
+
+  leftAlign() {
+    setState(() {
+      textData[currentIndex].textAlign = TextAlign.left;
+    });
+  }
+
+  rightAlign() {
+    setState(() {
+      textData[currentIndex].textAlign = TextAlign.right;
+    });
+  }
+
+  justifyText() {
+    setState(() {
+      textData[currentIndex].textAlign = TextAlign.justify;
+    });
+  }
+
+  centerAlign() {
+    setState(() {
+      textData[currentIndex].textAlign = TextAlign.center;
     });
   }
 

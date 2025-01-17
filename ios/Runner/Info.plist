@@ -51,5 +51,7 @@
 	<string>We need access to your camera to allow you to take photos directly within the app for editing and enhancing with our tools.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need access to your microphone to record audio while capturing videos within the app, enhancing your video creation experience.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Need to add images to gallery.</string>
 </dict>
 </plist>
