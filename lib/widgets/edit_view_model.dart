@@ -20,6 +20,37 @@ abstract class EditViewModel extends State<EditingScreen> {
     });
   }
 
+  increaseFontSize() {
+    setState(() {
+      textData[currentIndex].fontSize++;
+    });
+  }
+
+  decreaseFontSize() {
+    setState(() {
+      textData[currentIndex].fontSize--;
+    });
+  }
+
+  boldText() {
+    setState(() {
+      textData[currentIndex].isBold = !textData[currentIndex].isBold;
+    });
+  }
+
+  underlyingText() {
+    setState(() {
+      textData[currentIndex].isUnderlined =
+          !textData[currentIndex].isUnderlined;
+    });
+  }
+
+  italicText() {
+    setState(() {
+      textData[currentIndex].isItalic = !textData[currentIndex].isItalic;
+    });
+  }
+
   addNewText() {
     setState(() {
       textData.add(TextData(
@@ -27,9 +58,13 @@ abstract class EditViewModel extends State<EditingScreen> {
           textColor: Colors.black,
           textAlign: TextAlign.left,
           fontSize: 20,
+          isBold: false,
+          isUnderlined: false,
+          isItalic: false,
           left: 0,
           top: 0));
     });
+    textEditingController.clear();
     Navigator.of(context).pop();
   }
 

@@ -10,14 +10,23 @@ class ImageText extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
         // decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
         child: Text(
           textAlign: textData.textAlign,
           textData.text,
+          softWrap: true,
+          overflow: TextOverflow.visible,
           style: TextStyle(
-            color: textData.textColor,
-            fontSize: textData.fontSize,
-          ),
+              fontStyle:
+                  textData.isItalic ? FontStyle.italic : FontStyle.normal,
+              color: textData.textColor,
+              fontSize: textData.fontSize,
+              fontWeight: textData.isBold ? FontWeight.bold : FontWeight.normal,
+              decorationColor: textData.textColor,
+              decoration: textData.isUnderlined
+                  ? TextDecoration.underline
+                  : TextDecoration.none),
         ),
       ),
     );

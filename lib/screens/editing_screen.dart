@@ -88,11 +88,19 @@ class _EditingScreenState extends EditViewModel {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ToolIcon(icon: Icons.format_bold_sharp, onpressed: () {}),
-              ToolIcon(icon: Icons.format_italic, onpressed: () {}),
-              ToolIcon(icon: Icons.format_underline_outlined, onpressed: () {}),
-              ToolIcon(icon: Icons.text_increase_outlined, onpressed: () {}),
-              ToolIcon(icon: Icons.text_decrease, onpressed: () {}),
+              ToolIcon(
+                  icon: Icons.format_bold_sharp, onpressed: () => boldText()),
+              ToolIcon(
+                  icon: Icons.format_italic, onpressed: () => italicText()),
+              ToolIcon(
+                  icon: Icons.format_underline_outlined,
+                  onpressed: () => underlyingText()),
+              ToolIcon(
+                  icon: Icons.text_increase_outlined,
+                  onpressed: () => increaseFontSize()),
+              ToolIcon(
+                  icon: Icons.text_decrease,
+                  onpressed: () => decreaseFontSize()),
             ],
           ),
 
