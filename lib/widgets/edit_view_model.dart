@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:image_editing_app/models/text_data_model.dart';
 import 'package:image_editing_app/screens/editing_screen.dart';
 import 'package:image_editing_app/widgets/dialog_button.dart';
 
 abstract class EditViewModel extends State<EditingScreen> {
   TextEditingController textEditingController = TextEditingController();
+  List<TextData> textData = [];
+  addNewText() {
+    setState(() {
+      textData.add(TextData(
+          text: textEditingController.text,
+          textColor: Colors.black,
+          textAlign: TextAlign.left,
+          fontSize: 20,
+          left: 0,
+          top: 0));
+    });
+    Navigator.of(context).pop();
+  }
+
   addNewDialog(context) {
     showDialog(
         context: context,
@@ -17,7 +32,8 @@ abstract class EditViewModel extends State<EditingScreen> {
                 DialogButton(
                     onpressed: () => Navigator.of(context).pop(),
                     child: const Text('close')),
-                DialogButton(onpressed: () {}, child: const Text('Add')),
+                DialogButton(
+                    onpressed: () => addNewText(), child: const Text('Add')),
               ]);
         });
   }
