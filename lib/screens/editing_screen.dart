@@ -74,9 +74,9 @@ class _EditingScreenState extends EditViewModel {
         width: MediaQuery.of(context).size.width,
       );
 
-  Widget get _floatingActionButton => FloatingActionButton(
+  Widget get _floatingActionButton => FloatingActionButton.extended(
         onPressed: () => addNewDialog(context),
-        child: const Icon(Icons.edit),
+        label: const Text('Add Text'),
       );
   Widget get _editingTools => Wrap(
         spacing: 10, //horizontal
