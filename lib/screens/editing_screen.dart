@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_editing_app/core/constant/text_constant.dart';
 import 'package:image_editing_app/core/constant/tool_constant.dart';
 import 'package:image_editing_app/view_model/image_edit_view_model.dart';
+import 'package:image_editing_app/widgets/dialog_box.dart';
 import 'package:image_editing_app/widgets/image_text.dart';
 import 'package:image_editing_app/widgets/tool_icon.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,13 @@ class EditingScreen extends StatefulWidget {
 }
 
 class _EditingScreenState extends State<EditingScreen> {
+  final TextEditingController _textEditingController = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    _textEditingController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +82,7 @@ class _EditingScreenState extends State<EditingScreen> {
             ],
           ),
         ),
-        floatingActionButton: _floatingActionButton);
+        floatingActionButton: _floatingActionButton(context));
   }
 
   Widget get _image => Image.file(
@@ -82,12 +90,26 @@ class _EditingScreenState extends State<EditingScreen> {
         fit: BoxFit.cover,
         width: MediaQuery.of(context).size.width,
       );
+  Widget _floatingActionButton(BuildContext context) {
+    return FloatingActionButton.extended(
+      onPressed: () => showDialog(
+          context: context,
+          builder: (context) {
+            return DialogBox(
+                onPressAdd: () {
+                  context
+                      .read<ImageEditViewModel>()
+                      .addNewText(_textEditingController.text);
 
-  Widget get _floatingActionButton => FloatingActionButton.extended(
-        onPressed: () =>
-            context.read<ImageEditViewModel>().addNewDialog(context),
-        label: const Text('Add Text'),
-      );
+                  Navigator.of(context).pop();
+                  _textEditingController.clear();
+                },
+                textEditingController: _textEditingController);
+          }),
+      label: const Text(TextConstant.alertBoxTitle),
+    );
+  }
+
   Widget get _editingTools => Wrap(
         spacing: 10, //horizontal
         runSpacing: 10, //vertical

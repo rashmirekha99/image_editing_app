@@ -1,18 +1,17 @@
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:image_editing_app/core/constant/text_constant.dart';
 import 'package:image_editing_app/core/utils/permission.dart';
+import 'package:image_editing_app/core/utils/snack_bar.dart';
 import 'package:image_editing_app/models/text_data_model.dart';
-import 'package:image_editing_app/widgets/dialog_button.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:screenshot/screenshot.dart';
 
 class ImageEditViewModel extends ChangeNotifier {
-  final TextEditingController _textEditingController = TextEditingController();
   final ScreenshotController _screenshotController = ScreenshotController();
-  List<TextData> _textData = [];
+  final List<TextData> _textData = [];
   int _currentIndex = 0;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -24,7 +23,9 @@ class ImageEditViewModel extends ChangeNotifier {
     if (textData.isNotEmpty) {
       _screenshotController.capture().then((Uint8List? image) async {
         await saveImage(image!, context);
-      }).catchError((e) => print(e));
+      }).catchError((e) {
+        print(e.toString());
+      });
     }
   }
 
@@ -41,15 +42,12 @@ class ImageEditViewModel extends ChangeNotifier {
       if (permissionRes) {
         final res = await ImageGallerySaver.saveImage(image, name: name);
         if (res['isSuccess']) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text('Added to Gallery')));
+          showSnackBar(context, TextConstant.saveImagePositiveText);
         } else {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text('Error Occured')));
+          showSnackBar(context, TextConstant.saveImageErrorText);
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('You don\'t have permission to access gallery')));
+        showSnackBar(context, TextConstant.saveImagePermissionIssueText);
       }
 
       _isLoading = false;
@@ -60,7 +58,6 @@ class ImageEditViewModel extends ChangeNotifier {
   }
 
   void setCurrentIndex(int index) {
-    print(index);
     _currentIndex = index;
     notifyListeners();
   }
@@ -122,9 +119,9 @@ class ImageEditViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  addNewText(BuildContext context) {
+  void addNewText(String text) {
     _textData.add(TextData(
-        text: _textEditingController.text,
+        text: text,
         textColor: Colors.black,
         textAlign: TextAlign.left,
         fontSize: 15,
@@ -134,35 +131,6 @@ class ImageEditViewModel extends ChangeNotifier {
         left: 10,
         top: 10));
 
-    _textEditingController.clear();
-    Navigator.of(context).pop();
     notifyListeners();
-  }
-
-  addNewDialog(context) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-              title: const Text('Add Text'),
-              content: TextFormField(
-                controller: _textEditingController,
-              ),
-              actions: [
-                DialogButton(
-                    onpressed: () => Navigator.of(context).pop(),
-                    child: const Text('close')),
-                DialogButton(
-                    onpressed: () => addNewText(context),
-                    child: const Text('Add')),
-              ]);
-        });
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _textEditingController.dispose();
   }
 }
