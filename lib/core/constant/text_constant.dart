@@ -9,4 +9,5 @@ class TextConstant {
   static const saveImageErrorText = 'Error Occured';
   static const saveImagePermissionIssueText =
       'You don\'t have permission to access gallery';
+  static const homePageAddImageTitle = 'Add a Image To Edit';
 }
