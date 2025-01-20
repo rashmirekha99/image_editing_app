@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:image_editing_app/core/constant/image_color_filters.dart';
 import 'package:image_editing_app/core/constant/text_constant.dart';
 import 'package:image_editing_app/core/utils/permission.dart';
 import 'package:image_editing_app/core/utils/snack_bar.dart';
@@ -14,6 +15,8 @@ class ImageEditViewModel extends ChangeNotifier {
   final List<TextData> _textData = [];
   int _currentIndex = 0;
   bool _isLoading = false;
+  ColorFilter _colorFilter = ImageColorFilters.identity;
+  ColorFilter get colorFilter => _colorFilter;
   bool get isLoading => _isLoading;
   int get currentIndex => _currentIndex;
   List<TextData> get textData => _textData;
@@ -55,6 +58,11 @@ class ImageEditViewModel extends ChangeNotifier {
     } catch (e) {
       print((e.toString()));
     }
+  }
+
+  void imageFilter(ColorFilter colorFilter) {
+    _colorFilter = colorFilter;
+    notifyListeners();
   }
 
   void setCurrentIndex(int index) {

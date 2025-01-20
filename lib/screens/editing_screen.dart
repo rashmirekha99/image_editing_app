@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_editing_app/core/constant/image_color_filters.dart';
 import 'package:image_editing_app/core/constant/text_constant.dart';
 import 'package:image_editing_app/view_model/image_edit_view_model.dart';
 import 'package:image_editing_app/widgets/dialog_box.dart';
@@ -27,6 +28,7 @@ class _EditingScreenState extends State<EditingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
           title: const Text(TextConstant.editingPageTitle),
@@ -79,16 +81,61 @@ class _EditingScreenState extends State<EditingScreen> {
                 });
               }),
               const EditingTools(),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: height * 0.05),
+                child: Container(
+                  height: double.maxFinite,
+                  child: ListView(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    children:
+                        ImageColorFilters.colorFilterList.map((colorFilter) {
+                      return Column(
+                        children: [
+                          Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  context
+                                      .read<ImageEditViewModel>()
+                                      .imageFilter(colorFilter);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: ColorFiltered(
+                                    colorFilter: colorFilter,
+                                    child: Image.file(
+                                      widget.imageFile!,
+                                      fit: BoxFit.cover,
+                                      width: 90,
+                                      height: 100,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const Text('Normal'),
+                            ],
+                          ),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                ),
+              )
             ],
           ),
         ),
         floatingActionButton: _floatingActionButton(context));
   }
 
-  Widget get _image => Image.file(
-        widget.imageFile!,
-        fit: BoxFit.cover,
-        width: MediaQuery.of(context).size.width,
+  Widget get _image => ColorFiltered(
+        colorFilter: context.watch<ImageEditViewModel>().colorFilter,
+        child: Image.file(
+          widget.imageFile!,
+          fit: BoxFit.cover,
+          width: MediaQuery.of(context).size.width,
+        ),
       );
   Widget _floatingActionButton(BuildContext context) {
     return FloatingActionButton.extended(
@@ -109,6 +156,4 @@ class _EditingScreenState extends State<EditingScreen> {
       label: const Text(TextConstant.alertBoxTitle),
     );
   }
-
-  
 }
