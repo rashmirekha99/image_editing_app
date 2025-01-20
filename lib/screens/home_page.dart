@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_editing_app/core/constant/route_names.dart';
+import 'package:image_editing_app/routes/route_names.dart';
 import 'package:image_editing_app/core/constant/text_constant.dart';
 import 'package:image_editing_app/core/utils/image_picker.dart';
 
