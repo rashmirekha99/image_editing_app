@@ -9,5 +9,8 @@ class ToolConstants {
     Colors.green,
     Colors.brown,
     Colors.indigo,
+    Colors.blueAccent,
+    Colors.lime,
+    Colors.teal,
   ];
 }

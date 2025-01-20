@@ -1,11 +1,11 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_editing_app/core/constant/text_constant.dart';
-import 'package:image_editing_app/core/constant/tool_constant.dart';
 import 'package:image_editing_app/view_model/image_edit_view_model.dart';
 import 'package:image_editing_app/widgets/dialog_box.dart';
+import 'package:image_editing_app/widgets/editing_tools.dart';
 import 'package:image_editing_app/widgets/image_text.dart';
-import 'package:image_editing_app/widgets/tool_icon.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -78,7 +78,7 @@ class _EditingScreenState extends State<EditingScreen> {
                   );
                 });
               }),
-              _editingTools
+              const EditingTools(),
             ],
           ),
         ),
@@ -110,75 +110,5 @@ class _EditingScreenState extends State<EditingScreen> {
     );
   }
 
-  Widget get _editingTools => Wrap(
-        spacing: 10, //horizontal
-        runSpacing: 10, //vertical
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ToolIcon(
-                  icon: Icons.format_align_justify,
-                  onpressed: () =>
-                      context.read<ImageEditViewModel>().justifyText()),
-              ToolIcon(
-                  icon: Icons.format_align_center_sharp,
-                  onpressed: () =>
-                      context.read<ImageEditViewModel>().centerAlign()),
-              ToolIcon(
-                  icon: Icons.format_align_left,
-                  onpressed: () =>
-                      context.read<ImageEditViewModel>().leftAlign()),
-              ToolIcon(
-                  icon: Icons.format_align_right,
-                  onpressed: () =>
-                      context.read<ImageEditViewModel>().rightAlign()),
-            ],
-          ),
-
-          ////
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ToolIcon(
-                  icon: Icons.format_bold_sharp,
-                  onpressed: () =>
-                      context.read<ImageEditViewModel>().boldText()),
-              ToolIcon(
-                  icon: Icons.format_italic,
-                  onpressed: () =>
-                      context.read<ImageEditViewModel>().italicText()),
-              ToolIcon(
-                  icon: Icons.format_underline_outlined,
-                  onpressed: () =>
-                      context.read<ImageEditViewModel>().underlyingText()),
-              ToolIcon(
-                  icon: Icons.text_increase_outlined,
-                  onpressed: () =>
-                      context.read<ImageEditViewModel>().increaseFontSize()),
-              ToolIcon(
-                  icon: Icons.text_decrease,
-                  onpressed: () =>
-                      context.read<ImageEditViewModel>().decreaseFontSize()),
-            ],
-          ),
-
-          //
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: ToolConstants.ktoolColors.map(
-              (e) {
-                return GestureDetector(
-                  onTap: () =>
-                      context.read<ImageEditViewModel>().changeTextColor(e),
-                  child: CircleAvatar(
-                    backgroundColor: e,
-                  ),
-                );
-              },
-            ).toList(),
-          ),
-        ],
-      );
+  
 }
