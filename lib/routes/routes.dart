@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_editing_app/routes/route_names.dart';
-import 'package:image_editing_app/view/pages/editing_screen.dart';
-import 'package:image_editing_app/view/pages/home_page.dart';
+import 'package:image_editing_app/screens/editing_screen.dart';
+import 'package:image_editing_app/screens/home_page.dart';
 
 Route<dynamic>? onGenerateRoute(RouteSettings routeSetting) {
   switch (routeSetting.name) {
