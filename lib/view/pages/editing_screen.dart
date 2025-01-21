@@ -32,7 +32,6 @@ class _EditingScreenState extends State<EditingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
         appBar: AppBar(
           title: const Text(TextConstant.editingPageTitle),
@@ -131,7 +130,7 @@ class _EditingScreenState extends State<EditingScreen> {
           Visibility(
             visible: context.watch<ImageEditViewModel>().isBlur,
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+              filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
               child: Container(),
             ),
           )
