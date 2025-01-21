@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
+        android:requestLegacyExternalStorage="true"
         android:label="image_editing_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
@@ -25,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"

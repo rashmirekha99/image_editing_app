@@ -15,6 +15,7 @@ class ImageColorFilters {
   static const Map<String, ColorFilter> green = {
     'Green': ColorFilter.mode(Colors.green, BlendMode.color)
   };
+  
 
   static const Map<String, ColorFilter> greyscale = {
     'Greyscale': ColorFilter.matrix(<double>[

@@ -15,6 +15,8 @@ class ImageEditViewModel extends ChangeNotifier {
   final List<TextData> _textData = [];
   int _currentIndex = 0;
   bool _isLoading = false;
+  bool _isBlur = false;
+  bool get isBlur => _isBlur;
   ColorFilter _colorFilter = ImageColorFilters.normal.values.first;
   ColorFilter get colorFilter => _colorFilter;
   bool get isLoading => _isLoading;
@@ -23,13 +25,11 @@ class ImageEditViewModel extends ChangeNotifier {
   ScreenshotController get screenshotController => _screenshotController;
 
   saveToGallery(BuildContext context) {
-    if (textData.isNotEmpty) {
-      _screenshotController.capture().then((Uint8List? image) async {
-        await saveImage(image!, context);
-      }).catchError((e) {
-        print(e.toString());
-      });
-    }
+    _screenshotController.capture().then((Uint8List? image) async {
+      await saveImage(image!, context);
+    }).catchError((e) {
+      print(e.toString());
+    });
   }
 
   Future<void> saveImage(Uint8List image, context) async {
@@ -62,6 +62,11 @@ class ImageEditViewModel extends ChangeNotifier {
 
   void imageFilter(ColorFilter colorFilter) {
     _colorFilter = colorFilter;
+    notifyListeners();
+  }
+
+  void setImageBlur() {
+    _isBlur = !isBlur;
     notifyListeners();
   }
 
