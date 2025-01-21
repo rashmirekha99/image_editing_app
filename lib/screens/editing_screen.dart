@@ -3,16 +3,18 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_editing_app/core/constant/image_color_filters.dart';
 import 'package:image_editing_app/core/constant/text_constant.dart';
+import 'package:image_editing_app/core/utils/image_cropper.dart';
 import 'package:image_editing_app/view_model/image_edit_view_model.dart';
 import 'package:image_editing_app/widgets/dialog_box.dart';
 import 'package:image_editing_app/widgets/editing_tools.dart';
 import 'package:image_editing_app/widgets/image_text.dart';
+import 'package:image_editing_app/widgets/tool_icon.dart';
 import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 
 class EditingScreen extends StatefulWidget {
-  const EditingScreen({super.key, required this.imageFile});
-  final File? imageFile;
+  EditingScreen({super.key, required this.imageFile});
+  File? imageFile;
 
   @override
   State<EditingScreen> createState() => _EditingScreenState();
@@ -81,6 +83,7 @@ class _EditingScreenState extends State<EditingScreen> {
                 });
               }),
               const EditingTools(),
+              _imageCrop,
               Padding(
                 padding: EdgeInsets.symmetric(vertical: height * 0.05),
                 child: Container(
@@ -122,13 +125,25 @@ class _EditingScreenState extends State<EditingScreen> {
                     }).toList(),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
         floatingActionButton: _floatingActionButton(context));
   }
 
+  Widget get _imageCrop => SizedBox(
+        child: ToolIcon(
+            icon: Icons.crop,
+            onpressed: () async {
+              final res = await cropImage(widget.imageFile);
+              if (res != null) {
+                setState(() {
+                  widget.imageFile = res;
+                });
+              }
+            }),
+      );
   Widget get _image => ColorFiltered(
         colorFilter: context.watch<ImageEditViewModel>().colorFilter,
         child: Image.file(
