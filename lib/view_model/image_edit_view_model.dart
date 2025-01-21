@@ -15,7 +15,7 @@ class ImageEditViewModel extends ChangeNotifier {
   final List<TextData> _textData = [];
   int _currentIndex = 0;
   bool _isLoading = false;
-  ColorFilter _colorFilter = ImageColorFilters.identity;
+  ColorFilter _colorFilter = ImageColorFilters.normal.values.first;
   ColorFilter get colorFilter => _colorFilter;
   bool get isLoading => _isLoading;
   int get currentIndex => _currentIndex;

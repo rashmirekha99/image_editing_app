@@ -98,13 +98,13 @@ class _EditingScreenState extends State<EditingScreen> {
                                 onTap: () {
                                   context
                                       .read<ImageEditViewModel>()
-                                      .imageFilter(colorFilter);
+                                      .imageFilter(colorFilter.values.first);
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 8.0),
                                   child: ColorFiltered(
-                                    colorFilter: colorFilter,
+                                    colorFilter: colorFilter.values.first,
                                     child: Image.file(
                                       widget.imageFile!,
                                       fit: BoxFit.cover,
@@ -114,7 +114,7 @@ class _EditingScreenState extends State<EditingScreen> {
                                   ),
                                 ),
                               ),
-                              const Text('Normal'),
+                              Text(colorFilter.keys.first),
                             ],
                           ),
                         ],
