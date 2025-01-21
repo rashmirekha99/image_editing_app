@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_editing_app/core/constant/tool_constant.dart';
 import 'package:image_editing_app/view_model/image_edit_view_model.dart';
-import 'package:image_editing_app/widgets/tool_icon.dart';
+import 'package:image_editing_app/view/widgets/tool_icon.dart';
 import 'package:provider/provider.dart';
 
 class EditingTools extends StatefulWidget {

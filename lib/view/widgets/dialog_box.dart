@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_editing_app/core/constant/text_constant.dart';
-import 'package:image_editing_app/widgets/dialog_button.dart';
+import 'package:image_editing_app/view/widgets/dialog_button.dart';
 
 class DialogBox extends StatefulWidget {
   const DialogBox(
